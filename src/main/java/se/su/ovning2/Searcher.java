@@ -1,37 +1,66 @@
 package se.su.ovning2;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 
 public class Searcher implements SearchOperations {
 
-  public Searcher(Collection<Recording> data) {
+  private final Collection<Recording> recordings;
 
-    Collection<Recording> recordings = data;
+  public Searcher(Collection<Recording> data) {
+    this.recordings = data;
   }
 
   @Override
   public long numberOfArtists() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'numberOfArtists'");
+    // använder hashset för att vi inte bryr oss om sortering
+    Set<String> uniqueArtists = new HashSet<>();
+
+    for (Recording r : recordings) {
+      uniqueArtists.add(r.getArtist());
+    }
+
+    return uniqueArtists.size();
   }
 
   @Override
   public long numberOfGenres() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'numberOfGenres'");
+    // använder hashset för att vi inte bryr oss om sortering
+    Set<String> uniqueGenres = new HashSet<>();
+
+    for (Recording r : recordings) {
+      uniqueGenres.addAll(r.getGenre());
+    }
+
+    return uniqueGenres.size();
   }
 
   @Override
   public long numberOfTitles() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'numberOfTitles'");
+    // använder hashset för att vi inte bryr oss om sortering
+    Set<String> uniqueTitles = new HashSet<>();
+
+    for (Recording r : recordings) {
+      uniqueTitles.add(r.getTitle());
+    }
+
+    return uniqueTitles.size();
   }
 
   @Override
   public boolean doesArtistExist(String name) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'doesArtistExist'");
+    // hashSet för att vi bryr oss inte om sortering och för att vi behöver hitta
+    // ett namn
+    Set<String> uniqueArtists = new HashSet<>();
+
+    for (Recording r : recordings) {
+      uniqueArtists.add(r.getArtist());
+    }
+
+    return uniqueArtists.contains(name);
+
   }
 
   @Override

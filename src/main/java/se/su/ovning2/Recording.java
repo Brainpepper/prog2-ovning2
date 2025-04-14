@@ -3,7 +3,7 @@ package se.su.ovning2;
 import java.util.Collection;
 import java.util.Set;
 
-public class Recording {
+public class Recording implements Comparable<Recording> {
   private final int year;
   private final String artist;
   private final String title;
@@ -16,6 +16,35 @@ public class Recording {
     this.artist = artist;
     this.type = type;
     this.genre = genre;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof Recording)) {
+      return false;
+    }
+
+    Recording r = (Recording) obj;
+    return (this.year == r.getYear() && this.artist.equals(r.getArtist())
+        && this.title.equals(r.getTitle()));
+  }
+
+  @Override
+  public int compareTo(Recording r) {
+    if (this.year == r.getYear()) {
+      return 0;
+    } else {
+      return this.year > r.getYear() ? 1 : -1;
+    }
+  }
+
+  @Override
+  public int hashCode() {
+    int c = 17;
+    c += year;
+    c += artist.hashCode();
+    c += title.hashCode();
+    return 37 * c;
   }
 
   public String getArtist() {
